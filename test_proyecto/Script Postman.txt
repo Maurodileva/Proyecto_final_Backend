@@ -1,0 +1,24 @@
+GET TODAS: http://localhost:3000/movies/
+
+GET PELICULA 1: http://localhost:3000/movies/1
+
+
+**PARA POST Y PUT Setear radio button; Body, raw y JSON
+
+POST PELICULA TEST:http://localhost:3000/movies/
+
+{
+  "Pelicula_Nombre": "Nueva Pelicula",
+  "Pelicula_Nombre_Original": "New Movie",
+  "Anio": "2023-01-01",
+  "Sinopsis": "Sinopsis de la nueva película",
+  "id_Estado": 1,
+  "Lenguaje_Original_id": 1,
+  "PresupuestoUSD": 1000000.00,
+  "IngresosUSD": 2000000.00
+}
+
+
+PUT PELICULA TEST:http://localhost:3000/movies/39 --el id del registro a actualizar
+
+DELETE PELICULA TEST:http://localhost:3000/movies/39 --el id del registro a eliminar
