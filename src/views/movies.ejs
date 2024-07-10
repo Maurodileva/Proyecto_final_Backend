@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Películas</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <script src="https://kit.fontawesome.com/f7fb471b65.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <style>
+    .message {
+      background-color: #f0d2d7;
+      color:  #9f3647;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .btn-custom {
+      background-color: #9f3647;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      margin: 5px;
+    }
+    .btn-custom:hover {
+      background-color: #872c3c;
+    }
+
+    /* Estilo para separación de películas */
+    ul.movie-list li {
+      border-bottom: 1px solid #367e9f;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* Estilo para el nombre de la película */
+    .movie-title {
+      background-color: #367e9f;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="navegacion">
+      <a class="anclaLogo" href="#">
+        <i class="fas fa-film" aria-hidden="true"></i>
+        <span>CAC-Movies</span>
+      </a>
+      <ul class="listaNav">
+        <li class="listaItem"><a class="linkNav" href="#tendencias">Tendencias</a></li>
+        <li class="listaItem"><a class="linkNav" href="./pages/registrarse.html">Registrarse</a></li>
+        <li class="listaItem"><a class="linkNav iniciarSesion" href="./pages/iniciosesion.html">Iniciar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <% if (message) { %>
+    <div class="message">
+      <p><%= message %></p>
+    </div>
+    <script>
+      setTimeout(() => {
+        window.location.href = '/movies';
+      }, 3000);
+    </script>
+  <% } %>
+
+  <h1>Lista de Películas</h1>
+  <ul class="movie-list">
+    <% movies.forEach(movie => { %>
+      <li>
+        <span class="movie-title"><%= movie.Pelicula_Nombre %></span> (<%= new Date(movie.Anio).getFullYear() %>)
+        <form action="/movies/<%= movie.id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit" class="btn-custom">Eliminar</button>
+        </form>
+        <form action="/movies/<%= movie.id %>?_method=PUT" method="POST" style="display:inline;">
+          <input type="text" name="Pelicula_Nombre" value="<%= movie.Pelicula_Nombre %>" required>
+          <input type="text" name="Pelicula_Nombre_Original" value="<%= movie.Pelicula_Nombre_Original %>" required>
+          <input type="date" name="Anio" value="<%= movie.Anio.toISOString().split('T')[0] %>" required>
+          <textarea name="Sinopsis" required><%= movie.Sinopsis %></textarea>
+          <input type="number" name="id_Estado" value="<%= movie.id_Estado %>" required>
+          <input type="number" name="Lenguaje_Original_id" value="<%= movie.Lenguaje_Original_id %>" required>
+          <input type="number" name="PresupuestoUSD" value="<%= movie.PresupuestoUSD %>" required>
+          <input type="number" name="IngresosUSD" value="<%= movie.IngresosUSD %>" required>
+          <button type="submit" class="btn-custom">Actualizar</button>
+        </form>
+      </li>
+    <% }); %>
+  </ul>
+
+  <h2>Agregar Nueva Película</h2>
+  <form action="/movies" method="POST">
+    <input type="text" name="Pelicula_Nombre" placeholder="Nombre de la Película" required>
+    <input type="text" name="Pelicula_Nombre_Original" placeholder="Nombre Original de la Película" required>
+    <input type="date" name="Anio" placeholder="Año" required>
+    <textarea name="Sinopsis" placeholder="Sinopsis" required></textarea>
+    <input type="number" name="id_Estado" placeholder="ID del Estado" required>
+    <input type="number" name="Lenguaje_Original_id" placeholder="ID del Lenguaje Original" required>
+    <input type="number" name="PresupuestoUSD" placeholder="Presupuesto USD" required>
+    <input type="number" name="IngresosUSD" placeholder="Ingresos USD" required>
+    <button type="submit" class="btn-custom">Agregar</button>
+  </form> 
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
